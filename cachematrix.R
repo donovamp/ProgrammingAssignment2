@@ -1,15 +1,38 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These functions pair together to cache the result of a inverse matrix computation and 
+## allow for easy/quick recall of the result. his avoids redundant inverse matrix computations
+## when working with the same matrix. All matrices are assumed to be square.
 
-## Write a short comment describing this function
+## This function creates a list of functions ('setters' and 'getters'). These functions and 
+## their associated objects ('x' and 'inv') are saved in a S3 object for the specific matrix.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    inv <- NULL
+    set <- function(y) {
+        x <<- y
+        inv <<- NULL
+    }
+    get <- function() x
+    setinv <- function(solve) inv <<- solve
+    getinv <- function() inv
+    list(set = set, get = get,
+         setinv = setinv,
+         getinv = getinv)
 }
 
 
-## Write a short comment describing this function
+## This function prints the inverse matrix computation for a specific matrix. Step 1: checks
+## if the computation has already been computed and recalls it if available. Step 2: computes
+## the inverse matrix computation if unavailable. Prints the recalled/calculated inverse matrix
+## computation.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    inv <- x$getinv()
+    if(!is.null(inv)) {
+        message("getting cached data")
+        return(inv)
+    }
+    data <- x$get()
+    inv <- solve(data, ...)
+    x$setinv(inv)
+    inv
 }
