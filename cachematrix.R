@@ -21,9 +21,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## This function prints the inverse matrix computation for a specific matrix. Step 1: checks
-## if the computation has already been computed and recalls it if available. Step 2: computes
-## the inverse matrix computation if unavailable. Prints the recalled/calculated inverse matrix
-## computation.
+## if the computation has already been computed and recalls/prints it if available. Step 2: 
+## computes the inverse matrix computation if unavailable and prints it.
 
 cacheSolve <- function(x, ...) {
     inv <- x$getinv()
